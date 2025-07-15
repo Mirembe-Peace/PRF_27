@@ -192,18 +192,14 @@ function closeExhibit(event) {
     }
         
         // Stop sound
-    if (currentExhibit.sound) {
-            currentExhibit.sound.stop();
-            currentExhibit.sound.disconnect();
-        }
+       if (currentExhibit && currentExhibit.sound) {
+        currentExhibit.sound.stop();
+        currentExhibit.sound.disconnect();
+    }
         
         currentExhibit = null;
     // Hide UI
     exhibitUI.style.display = 'none';
-
-    if (!isMobile && !isMouseLocked && document.pointerLockElement !== canvas) {
-        canvas.requestPointerLock();
-    }
 }
 
 const mouse = new THREE.Vector2();
