@@ -508,6 +508,8 @@ const pictureHotspotData = [
     }
 ];
 
+let controls;
+
 //controls
 function init() {
     controls = new MapControls(camera, renderer.domElement);
