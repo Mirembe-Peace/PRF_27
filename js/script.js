@@ -79,7 +79,7 @@ if(isMobile) {
 }
 else{
     new RGBELoader()
-    .setPath('https://storage.googleapis.com/pearl-artifacts-cdn/museum_model/')
+    .setPath('https://storage.googleapis.com/version_01_museum/')
     .load('environment.hdr', function (texture){
         texture.mapping = THREE.EquirectangularReflectionMapping;
         scene.background = texture;
