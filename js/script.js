@@ -526,7 +526,7 @@ function init() {
 
 
 function animate(){
-    controls.update(clock.getDelta());
+    controls.update();
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
 }
