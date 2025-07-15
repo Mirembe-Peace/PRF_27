@@ -64,7 +64,7 @@ function loadMuseum(){
 
             createExhibitHotspots();
             createPictureHotspots();
-            init();
+            
         },
         function ( xhr ) {
             console.log( (xhr.loaded / xhr.total * 100 ) + '% loaded');
@@ -510,6 +510,8 @@ const pictureHotspotData = [
 
 let controls;
 
+init();
+
 //controls
 function init() {
     controls = new MapControls(camera, renderer.domElement);
@@ -526,7 +528,7 @@ function init() {
 
 
 function animate(){
-    controls.update();
+    if (controls) {controls.update(); }
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
 }
