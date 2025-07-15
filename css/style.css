@@ -106,7 +106,7 @@ html, body {
         }
 }
 
-#home-button {
+#homeButton {
     position: fixed;
     top: 20px;
     right: 20px;
