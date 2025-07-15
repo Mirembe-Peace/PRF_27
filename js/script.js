@@ -1,7 +1,8 @@
 import * as THREE from 'three';
 import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { FirstPersonControls } from 'three/addons/controls/FirstPersonControls.js';
+import { GUI } from 'three/addons/libs/lil-gui.module.js';
+import { MapControls } from 'three/addons/controls/MapControls.js';
 
 //setting up the scene
 const scene = new THREE.Scene();
@@ -63,6 +64,7 @@ function loadMuseum(){
 
             createExhibitHotspots();
             createPictureHotspots();
+            init();
         },
         function ( xhr ) {
             console.log( (xhr.loaded / xhr.total * 100 ) + '% loaded');
@@ -507,18 +509,22 @@ const pictureHotspotData = [
 ];
 
 //controls
+function init() {
+    controls = new MapControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.05;
+    controls.screenSpacePanning = false;
+    controls.minDistance = 100;
+    controls.maxDistance = 500;
+    controls.maxPolarAngle = Math.PI / 2;
 
-
-const controls = new FirstPersonControls(camera, canvas);
-controls.activeLook = true;
-controls.autoForward = false;
-controls.constrainVertical = false;
-controls.lookVertical = true;
-controls.lookSpeed = 0.005;
-scene.add(camera);
+    const gui = new GUI();
+    gui.add(controls, 'screenSpacePanning');
+}
 
 
 function animate(){
+    controls.update(clock.getDelta());
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
 }
