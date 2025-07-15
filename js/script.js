@@ -37,6 +37,18 @@ pmremGenerator.compileEquirectangularShader();
 //device identification
 const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
+//loader
+const loadingManager = new THREE.LoadingManager(
+    () => {
+        // When all assets are loaded
+        updateLoadingProgress(1);
+    },
+    (item, loaded, total) => {
+        // Progress update
+        updateLoadingProgress(loaded / total);
+    }
+);
+
 //loading the model and texture
 function loadMuseum(){
     const gltfLoader = new GLTFLoader(loadingManager);
@@ -51,7 +63,6 @@ function loadMuseum(){
 
             createExhibitHotspots();
             createPictureHotspots();
-            fpsControls();
         },
         function ( xhr ) {
             console.log( (xhr.loaded / xhr.total * 100 ) + '% loaded');
@@ -338,16 +349,7 @@ function updateLoadingProgress(progress) {
     }
 }
 
-const loadingManager = new THREE.LoadingManager(
-    () => {
-        // When all assets are loaded
-        updateLoadingProgress(1);
-    },
-    (item, loaded, total) => {
-        // Progress update
-        updateLoadingProgress(loaded / total);
-    }
-);
+
 
 //instruction panel
 const instructionButton = document.getElementById("instructionButton");
@@ -506,7 +508,7 @@ const pictureHotspotData = [
 
 //controls
 
-function fpsControls() {
+
 const controls = new FirstPersonControls(camera, canvas);
 controls.activeLook = true;
 controls.autoForward = false;
@@ -514,7 +516,7 @@ controls.constrainVertical = false;
 controls.lookVertical = true;
 controls.lookSpeed = 0.005;
 scene.add(camera);
-}
+
 
 function animate(){
     renderer.render(scene, camera);
