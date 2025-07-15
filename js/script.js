@@ -531,7 +531,7 @@ function init() {
     controls = new MapControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
-    controls.screenSpacePanning = false;
+    controls.screenSpacePanning = true;
     controls.minDistance = 100;
     controls.maxDistance = 500;
     controls.maxPolarAngle = Math.PI / 2;
