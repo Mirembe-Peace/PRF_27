@@ -54,7 +54,7 @@ function loadMuseum(){
     const gltfLoader = new GLTFLoader(loadingManager);
 
     gltfLoader.load(
-        'https://storage.googleapis.com/pearl-artifacts-cdn/museum_model/museum_test_1blend.gltf',
+        'https://storage.googleapis.com/version_01_museum/museum_test_1blend.gltf',
         function (gltf) {
             const museum = gltf.scene;
             museum.position.set(0, 0, 0);
