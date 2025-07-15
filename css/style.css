@@ -106,7 +106,7 @@ html, body {
         }
 }
 
-#homeButton {
+#home-button {
     position: fixed;
     top: 20px;
     right: 20px;
@@ -116,7 +116,7 @@ html, body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    z-index: 10000;
+    z-index: 100;
     font-family: Arial, sans-serif;
     font-size: 16px;
     transition: background 0.3s;
