@@ -75,6 +75,14 @@ html, body {
     margin-top: 20px;
 }
 
+.welcome-sign {
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    margin-top: 20px;
+
+}
+
 .progress-bar {
     width: 200px;
     height: 4px;
