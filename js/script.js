@@ -41,6 +41,7 @@ const loadingManager = new THREE.LoadingManager(
         updateLoadingProgress(loaded / total);
     }
 );
+ init();
 
 //loading the model and texture
 function loadMuseum(){
@@ -56,7 +57,7 @@ function loadMuseum(){
 
             createExhibitHotspots();
             createPictureHotspots();
-            init();
+           
             
         },
         function ( xhr ) {
