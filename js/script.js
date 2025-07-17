@@ -539,8 +539,6 @@ const objects = [];
 init();
 function init() {
     controls = new PointerLockControls(camera, renderer.domElement);
- 
-    scene.add(controls);
 
 				const onKeyDown = function ( event ) {
 
@@ -605,8 +603,6 @@ function init() {
 
 				document.addEventListener( 'keydown', onKeyDown );
 				document.addEventListener( 'keyup', onKeyUp );
-
-				raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
 
                 //setting up the renderer
 				renderer.setPixelRatio( window.devicePixelRatio );
