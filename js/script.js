@@ -343,22 +343,33 @@ function updateLoadingProgress(progress) {
 
 //instruction panel
 const instructionButton = document.getElementById("instructionButton");
-    instructionButton.addEventListener('click', () => {
-        if (instructionContent.style.display === 'none') {
-            
-            instructionContent.style.display = 'block';
-            }
-    });
-
-        // Close instructions when button is clicked
 const instructionContent = document.getElementById('instruction-content');
-        instructionContent?.addEventListener('click', (e) => {
-        if (e.target.id === 'close-instructions') {
-             e.stopPropagation();
-            instructionContent.style.display = 'none';
-        }
-        
-    });
+
+// Initially hide the content
+instructionContent.style.display = 'none';
+
+instructionButton.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent event bubbling
+    instructionContent.style.display = instructionContent.style.display === 'none' ? 'block' : 'none';
+});
+
+// Close when clicking the close button
+document.getElementById('close-instructions')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    instructionContent.style.display = 'none';
+});
+
+// Close when clicking outside
+document.addEventListener('click', (e) => {
+    if (!instructionContent.contains(e.target)) {
+        instructionContent.style.display = 'none';
+    }
+});
+
+//home button
+document.getElementById('homeButton').addEventListener('click', () => {
+    window.location.href = "https://pearlrhythmfoundation.org/category/art-archive/";
+});
 
 //hotspot data
 const hotspotData = [
@@ -522,11 +533,14 @@ let prevTime = performance.now();
 const velocity = new THREE.Vector3();
 const direction = new THREE.Vector3();
 
+let canJump = false;
+const objects = []; 
+
 init();
 function init() {
     controls = new PointerLockControls(camera, renderer.domElement);
  
-    scene.add( controls.object );
+    scene.add(controls);
 
 				const onKeyDown = function ( event ) {
 
@@ -597,7 +611,6 @@ function init() {
                 //setting up the renderer
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
-				renderer.setAnimationLoop( animate );
 				document.body.appendChild( renderer.domElement );
 
                 renderer.toneMapping = THREE.ACESFilmicToneMapping;
