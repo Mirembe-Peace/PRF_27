@@ -107,6 +107,11 @@ function loadMuseum(){
             });
         }
 
+    // First-person controls variables
+const moveSpeed = 30;
+const lookSpeed = 0.002;
+const verticalLookLimit = Math.PI / 3; // Limit vertical look angle
+
         // Mouse movement variables
 let isMouseLocked = false;
 let previousMouseX = 0;
