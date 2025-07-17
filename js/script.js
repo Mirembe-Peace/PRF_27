@@ -11,6 +11,11 @@ const aspectRatio = window.innerWidth/window.innerHeight;
 const camera = new THREE.PerspectiveCamera(90, aspectRatio, 0.1, 1000);
 camera.position.set(84, 45, 288);
 
+//setting up renderer
+const renderer = new THREE.WebGLRenderer({
+    canvas: canvas
+});
+
 //setting upvthe canvas
 const canvas = document.querySelector('.canvas');
 
@@ -590,7 +595,6 @@ function init() {
 				raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
 
                 //setting up the renderer
-                renderer = new THREE.WebGLRenderer( { antialias: true } );
 				renderer.setPixelRatio( window.devicePixelRatio );
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				renderer.setAnimationLoop( animate );
