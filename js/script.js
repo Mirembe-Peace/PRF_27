@@ -11,13 +11,13 @@ const aspectRatio = window.innerWidth/window.innerHeight;
 const camera = new THREE.PerspectiveCamera(90, aspectRatio, 0.1, 1000);
 camera.position.set(84, 45, 288);
 
+//setting upvthe canvas
+const canvas = document.querySelector('.canvas');
+
 //setting up renderer
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 });
-
-//setting upvthe canvas
-const canvas = document.querySelector('.canvas');
 
 //lights
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
