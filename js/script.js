@@ -626,6 +626,11 @@ function init() {
 function animate(){
     const time = performance.now();
 
+                if (!controls) {
+        requestAnimationFrame(animate);
+        return;
+    }
+
 				if ( controls.isLocked === true ) {
 
 					raycaster.ray.origin.copy( controls.object.position );
