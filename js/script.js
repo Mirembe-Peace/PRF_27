@@ -22,8 +22,6 @@ ambientLight.position.set(86.73729926481377, 140.41787049838712, 17.547350205707
 scene.add(ambientLight);
 scene.add(directionalLight);
 
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 0.5;
 
 const pmremGenerator = new THREE.PMREMGenerator(renderer);
 pmremGenerator.compileEquirectangularShader();
@@ -601,6 +599,9 @@ function init() {
 				renderer.setSize( window.innerWidth, window.innerHeight );
 				renderer.setAnimationLoop( animate );
 				document.body.appendChild( renderer.domElement );
+
+                renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                renderer.toneMappingExposure = 0.5;
 
                 window.addEventListener( 'resize', onWindowResize );
 
