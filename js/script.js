@@ -22,10 +22,6 @@ ambientLight.position.set(86.73729926481377, 140.41787049838712, 17.547350205707
 scene.add(ambientLight);
 scene.add(directionalLight);
 
-
-const pmremGenerator = new THREE.PMREMGenerator(renderer);
-pmremGenerator.compileEquirectangularShader();
-
 //device identification
 const isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
@@ -602,6 +598,9 @@ function init() {
 
                 renderer.toneMapping = THREE.ACESFilmicToneMapping;
                 renderer.toneMappingExposure = 0.5;
+
+                const pmremGenerator = new THREE.PMREMGenerator(renderer);
+                pmremGenerator.compileEquirectangularShader();
 
                 window.addEventListener( 'resize', onWindowResize );
 
