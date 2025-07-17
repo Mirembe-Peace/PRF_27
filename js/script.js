@@ -56,6 +56,7 @@ function loadMuseum(){
 
             createExhibitHotspots();
             createPictureHotspots();
+            init();
             
         },
         function ( xhr ) {
@@ -536,7 +537,7 @@ const direction = new THREE.Vector3();
 let canJump = false;
 const objects = []; 
 
-init();
+
 function init() {
     controls = new PointerLockControls(camera, renderer.domElement);
 

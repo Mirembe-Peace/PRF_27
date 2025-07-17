@@ -126,6 +126,37 @@ html, body {
     background: rgba(0, 0, 0, 0.9);
 }
 
+#instruction-content {
+    position: fixed;
+    top: 60px;
+    left: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 15px;
+    border-radius: 5px;
+    max-width: 300px;
+    z-index: 10001;
+    display: none;
+}
+
+#instruction-content h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#instruction-content p {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+#close-instructions {
+    background-color: #444;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
 #exhibit-ui {
     position: fixed;
     bottom: 20px;
@@ -192,7 +223,7 @@ html, body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    z-index: 1001;
+    z-index: 10010;
 }
         
 #video-close-btn:hover {
