@@ -59,6 +59,12 @@ const objects = [];
 
 
 function init() {
+    if(!isMobile){
+                setupMouseLock();
+                setupKeyboardControls();
+            }
+
+}
 
         //loading the model and texture
 function loadMuseum(){
@@ -101,6 +107,62 @@ function loadMuseum(){
             });
         }
 
+        // Mouse movement variables
+let isMouseLocked = false;
+let previousMouseX = 0;
+let previousMouseY = 0;
+
+// Setup mouse lock
+function setupMouseLock() {
+       canvas.addEventListener('click', (e) => {
+        // Only request pointer lock if clicking directly on canvas (not UI elements)
+        if (!isMouseLocked && 
+            !e.target.closest('#instruction-content') && 
+            !e.target.closest('close-instructions') &&
+            !e.target.closest('#exhibit-ui') &&
+            !e.target.closest('#video-container')) {
+            canvas.requestPointerLock = canvas.requestPointerLock || 
+                                     canvas.mozRequestPointerLock || 
+                                     canvas.webkitRequestPointerLock;
+            canvas.requestPointerLock();
+        }
+    });
+    document.addEventListener('pointerlockchange', lockChangeAlert, false);
+    document.addEventListener('mozpointerlockchange', lockChangeAlert, false);
+    document.addEventListener('webkitpointerlockchange', lockChangeAlert, false);
+
+    function lockChangeAlert() {
+        if (document.pointerLockElement === canvas || 
+            document.mozPointerLockElement === canvas || 
+            document.webkitPointerLockElement === canvas) {
+            if (exhibitUI.style.display === 'block' || document.getElementById('video-container')) {
+                document.exitPointerLock();
+                return;
+            }
+            isMouseLocked = true;
+            document.addEventListener('mousemove', onMouseMove, false);
+        } 
+        else {
+            isMouseLocked = false;
+            document.removeEventListener('mousemove', onMouseMove, false);
+        }
+    }
+}
+
+// Mouse movement handler
+function onMouseMove(e) {
+    if (!isMouseLocked) return;
+
+    const movementX = e.movementX || e.mozMovementX || e.webkitMovementX || 0;
+    const movementY = e.movementY || e.mozMovementY || e.webkitMovementY || 0;
+
+    // Horizontal rotation (left/right)
+    camera.rotation.y -= movementX * lookSpeed;
+
+    camera.rotation.x = 0;
+}
+
+function setupKeyboardControls(){
     controls = new PointerLockControls(camera, renderer.domElement);
 
 				const onKeyDown = function ( event ) {
@@ -163,9 +225,10 @@ function loadMuseum(){
 					}
 
 				};
-
-				document.addEventListener( 'keydown', onKeyDown );
+                document.addEventListener( 'keydown', onKeyDown );
 				document.addEventListener( 'keyup', onKeyUp );
+            }
+			
 
                 //setting up the renderer
 				renderer.setPixelRatio( window.devicePixelRatio );
@@ -181,7 +244,7 @@ function loadMuseum(){
                 window.addEventListener( 'resize', onWindowResize );
 
 
-}
+
 
 //operation functions
 
