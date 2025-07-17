@@ -41,9 +41,26 @@ const loadingManager = new THREE.LoadingManager(
         updateLoadingProgress(loaded / total);
     }
 );
- init();
 
-//loading the model and texture
+
+//controls
+let controls;
+let moveForward = false;
+let moveBackward = false;
+let moveLeft = false;
+let moveRight = false;
+
+let prevTime = performance.now();
+const velocity = new THREE.Vector3();
+const direction = new THREE.Vector3();
+
+let canJump = false;
+const objects = []; 
+
+
+function init() {
+
+        //loading the model and texture
 function loadMuseum(){
     const gltfLoader = new GLTFLoader(loadingManager);
 
@@ -69,19 +86,101 @@ function loadMuseum(){
     );
 }
 
-if(isMobile) {
-    loadMuseum();
-}
-else{
-    new RGBELoader()
-    .setPath('https://storage.googleapis.com/pearl-artifacts-cdn/')
-    .load('environment.hdr', function (texture){
-        texture.mapping = THREE.EquirectangularReflectionMapping;
-        scene.background = texture;
-        scene.environment = texture;
+        if(isMobile) {
+            loadMuseum();
+        }
+        else{
+            new RGBELoader()
+            .setPath('https://storage.googleapis.com/pearl-artifacts-cdn/')
+            .load('environment.hdr', function (texture){
+                texture.mapping = THREE.EquirectangularReflectionMapping;
+                scene.background = texture;
+                scene.environment = texture;
 
-        loadMuseum();
-    });
+                loadMuseum();
+            });
+        }
+
+    controls = new PointerLockControls(camera, renderer.domElement);
+
+				const onKeyDown = function ( event ) {
+
+					switch ( event.code ) {
+
+						case 'ArrowUp':
+						case 'KeyW':
+							moveForward = true;
+							break;
+
+						case 'ArrowLeft':
+						case 'KeyA':
+							moveLeft = true;
+							break;
+
+						case 'ArrowDown':
+						case 'KeyS':
+							moveBackward = true;
+							break;
+
+						case 'ArrowRight':
+						case 'KeyD':
+							moveRight = true;
+							break;
+
+						case 'Space':
+							if ( canJump === true ) velocity.y += 350;
+							canJump = false;
+							break;
+
+					}
+
+				};
+
+				const onKeyUp = function ( event ) {
+
+					switch ( event.code ) {
+
+						case 'ArrowUp':
+						case 'KeyW':
+							moveForward = false;
+							break;
+
+						case 'ArrowLeft':
+						case 'KeyA':
+							moveLeft = false;
+							break;
+
+						case 'ArrowDown':
+						case 'KeyS':
+							moveBackward = false;
+							break;
+
+						case 'ArrowRight':
+						case 'KeyD':
+							moveRight = false;
+							break;
+
+					}
+
+				};
+
+				document.addEventListener( 'keydown', onKeyDown );
+				document.addEventListener( 'keyup', onKeyUp );
+
+                //setting up the renderer
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				document.body.appendChild( renderer.domElement );
+
+                renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                renderer.toneMappingExposure = 0.5;
+
+                const pmremGenerator = new THREE.PMREMGenerator(renderer);
+                pmremGenerator.compileEquirectangularShader();
+
+                window.addEventListener( 'resize', onWindowResize );
+
+
 }
 
 //operation functions
@@ -524,104 +623,6 @@ const pictureHotspotData = [
     }
 ];
 
-//controls
-let controls;
-let moveForward = false;
-let moveBackward = false;
-let moveLeft = false;
-let moveRight = false;
-
-let prevTime = performance.now();
-const velocity = new THREE.Vector3();
-const direction = new THREE.Vector3();
-
-let canJump = false;
-const objects = []; 
-
-
-function init() {
-    controls = new PointerLockControls(camera, renderer.domElement);
-
-				const onKeyDown = function ( event ) {
-
-					switch ( event.code ) {
-
-						case 'ArrowUp':
-						case 'KeyW':
-							moveForward = true;
-							break;
-
-						case 'ArrowLeft':
-						case 'KeyA':
-							moveLeft = true;
-							break;
-
-						case 'ArrowDown':
-						case 'KeyS':
-							moveBackward = true;
-							break;
-
-						case 'ArrowRight':
-						case 'KeyD':
-							moveRight = true;
-							break;
-
-						case 'Space':
-							if ( canJump === true ) velocity.y += 350;
-							canJump = false;
-							break;
-
-					}
-
-				};
-
-				const onKeyUp = function ( event ) {
-
-					switch ( event.code ) {
-
-						case 'ArrowUp':
-						case 'KeyW':
-							moveForward = false;
-							break;
-
-						case 'ArrowLeft':
-						case 'KeyA':
-							moveLeft = false;
-							break;
-
-						case 'ArrowDown':
-						case 'KeyS':
-							moveBackward = false;
-							break;
-
-						case 'ArrowRight':
-						case 'KeyD':
-							moveRight = false;
-							break;
-
-					}
-
-				};
-
-				document.addEventListener( 'keydown', onKeyDown );
-				document.addEventListener( 'keyup', onKeyUp );
-
-                //setting up the renderer
-				renderer.setPixelRatio( window.devicePixelRatio );
-				renderer.setSize( window.innerWidth, window.innerHeight );
-				document.body.appendChild( renderer.domElement );
-
-                renderer.toneMapping = THREE.ACESFilmicToneMapping;
-                renderer.toneMappingExposure = 0.5;
-
-                const pmremGenerator = new THREE.PMREMGenerator(renderer);
-                pmremGenerator.compileEquirectangularShader();
-
-                window.addEventListener( 'resize', onWindowResize );
-
-
-}
-
 
 function animate(){
     const time = performance.now();
@@ -681,8 +682,9 @@ function animate(){
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
 }
-
+ init();
 animate();
+
 
 
 
